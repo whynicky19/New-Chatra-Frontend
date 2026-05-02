@@ -956,11 +956,11 @@ onMounted(async () => {
     overflow:hidden;
   }
   .tabs-bar{padding:0;overflow-x:hidden;flex-wrap:nowrap}
-  .tab-btn{flex:1;justify-content:center;padding:12px 4px;font-size:11px;white-space:nowrap;min-width:0}
+  .tab-btn{flex:1;justify-content:center;padding:12px 4px;font-size:11px;white-space:nowrap;min-width:0;min-height:44px}
   .tab-num{display:none}
   .tabs-actions-desktop{display:none}
   .tabs-actions-mobile{display:flex;gap:8px;padding:8px 12px;border-top:1px solid var(--border)}
-  .tabs-actions-mobile .btn{flex:1;justify-content:center;min-height:40px;font-size:12px}
+  .tabs-actions-mobile .btn{flex:1;justify-content:center;min-height:44px;font-size:12px}
   .tab-content{padding:10px 12px 80px;overflow-x:hidden}
   .page-header{padding:14px 12px 12px}
   .page-title{font-size:20px}
@@ -971,7 +971,7 @@ onMounted(async () => {
   .item-title{font-size:14px}
   .item-desc{font-size:12px}
   .item-actions{gap:4px}
-  .item-del,.item-edit{opacity:1;width:36px;height:36px}
+  .item-del,.item-edit{opacity:1;width:44px;height:44px}
   .post-sheet{padding:18px 14px 24px;border-radius:var(--r-2xl) var(--r-2xl) 0 0;max-height:92dvh}
   .post-overlay{padding:0;align-items:flex-end}
   .sheet-title{font-size:20px}

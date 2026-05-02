@@ -367,6 +367,7 @@ watch(() => chatsStore.activeMsgs.length, () => scrollBottom())
   .msg-inp{font-size:16px}
   .cw-name{font-size:14px}
   .cw-role{display:none}
+  .chip-remove{min-width:44px;min-height:44px}
 }
 .cw-head-l{display:flex;align-items:center;gap:12px}
 .cw-av{flex-shrink:0;position:relative}
@@ -384,7 +385,7 @@ watch(() => chatsStore.activeMsgs.length, () => scrollBottom())
 .members-bar{display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px;border-bottom:1px solid var(--border);background:var(--surface2);flex-shrink:0}
 .member-chip{display:flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:3px 8px 3px 4px}
 .chip-av-img{width:18px;height:18px;border-radius:50%;object-fit:cover}
-.chip-remove{background:none;border:none;cursor:pointer;color:var(--text4);font-size:14px;padding:0;line-height:1;margin-left:2px;transition:color .12s}
+.chip-remove{background:none;border:none;cursor:pointer;color:var(--text4);font-size:14px;padding:0;line-height:1;margin-left:2px;transition:color .12s;min-width:28px;min-height:28px;display:flex;align-items:center;justify-content:center}
 .chip-remove:hover{color:var(--red)}
 .msg-area{flex:1;overflow-y:auto;background:var(--bg)}
 .msgs{display:flex;flex-direction:column;gap:1px}

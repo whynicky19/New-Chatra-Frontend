@@ -668,7 +668,7 @@ onMounted(async () => {
 .subs-search svg { color: var(--text4); flex-shrink: 0; }
 .subs-search-inp { flex: 1; background: transparent; border: none; outline: none; font-size: 13px; color: var(--text1); font-family: inherit; }
 .subs-search-inp::placeholder { color: var(--text4); }
-.subs-search-clear { background: none; border: none; color: var(--text4); font-size: 16px; cursor: pointer; line-height: 1; padding: 0 2px; transition: color .15s; }
+.subs-search-clear { background: none; border: none; color: var(--text4); font-size: 16px; cursor: pointer; line-height: 1; padding: 0 2px; transition: color .15s; min-width: 32px; min-height: 32px; display: flex; align-items: center; justify-content: center; }
 .subs-search-clear:hover { color: var(--text1); }
 .subs-list { display: flex; flex-direction: column; gap: 6px; }
 .sub-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r-lg); cursor: pointer; transition: all .15s; }
@@ -716,7 +716,7 @@ onMounted(async () => {
   .am-title { font-size: 16px; margin-bottom: 6px; word-break: break-word; }
   .am-badges { flex-wrap: wrap; gap: 6px; }
   .am-tabs { padding: 0 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
-  .am-tab { padding: 10px 12px; font-size: 12px; white-space: nowrap; flex-shrink: 0; }
+  .am-tab { padding: 10px 12px; font-size: 12px; white-space: nowrap; flex-shrink: 0; min-height: 44px; }
   .am-body { padding: 14px 14px 80px; gap: 14px; }
   .inp { font-size: 16px; }
   .inp-ta { font-size: 16px; min-height: 100px; }
@@ -731,6 +731,9 @@ onMounted(async () => {
   .variant-chip { padding: 9px 14px; min-height: 44px; }
   .grade-actions { flex-direction: column; gap: 8px; }
   .grade-actions .btn { width: 100%; justify-content: center; }
+  .af-rm { width: 32px; height: 32px; font-size: 15px; }
+  .subs-search-clear { min-width: 44px; min-height: 44px; }
+  .back-sub-btn { min-height: 44px; }
   .subs-stats { flex-wrap: wrap; }
   .stat-chip { min-width: 70px; padding: 10px 12px; }
   .stat-n { font-size: 22px; }

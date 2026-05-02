@@ -203,7 +203,7 @@ watch(() => ai.msgs.value.length, () => scroll())
 .ai-file-prev { display: flex; align-items: center; gap: 8px; padding: 8px 18px; background: rgba(0,177,201,.08); border-top: 1px solid rgba(0,177,201,.12); font-size: 13px; font-weight: 500; color: var(--teal); flex-shrink: 0 }
 .ai-fp-thumb { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(0,177,201,.2) }
 .ai-fp-badge { font-size: 11px; background: rgba(6,182,212,.12); color: #06b6d4; border: 1px solid rgba(6,182,212,.2); border-radius: 100px; padding: 2px 8px }
-.ai-fp-rm { background: none; border: none; cursor: pointer; color: var(--text4); font-size: 18px; margin-left: auto; padding: 0; line-height: 1 }
+.ai-fp-rm { background: none; border: none; cursor: pointer; color: var(--text4); font-size: 18px; margin-left: auto; padding: 0; line-height: 1; min-width: 32px; min-height: 32px; display: flex; align-items: center; justify-content: center }
 .ai-fp-rm:hover { color: var(--red) }
 
 /* Input */
@@ -221,4 +221,10 @@ watch(() => ai.msgs.value.length, () => scroll())
 .send-btn:disabled { opacity: .4; cursor: not-allowed }
 :deep(.code-bl) { background: #0d0d1a; color: #99e6f0; border: 1px solid var(--border2); border-radius: var(--r-lg); padding: 14px; margin: 8px 0; overflow-x: auto; font-size: 13px; font-family: monospace; line-height: 1.5 }
 :deep(.ic) { background: rgba(0,177,201,.15); color: #99e6f0; padding: 1px 6px; border-radius: 4px; font-family: monospace; font-size: .9em }
+@media (max-width: 768px) {
+  .ai-attach-icon { width: 44px; height: 44px }
+  .send-btn { width: 44px; height: 44px }
+  .ai-fp-rm { min-width: 44px; min-height: 44px }
+  .ai-field { font-size: 16px }
+}
 </style>

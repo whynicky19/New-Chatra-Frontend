@@ -167,6 +167,7 @@ const sub = async () => {
   .input { font-size: 16px !important; }
   .btn-lg { min-height: 50px; font-size: 15px; }
   .frow { margin-bottom: 12px; }
+  .group-item { min-height: 44px; display: flex; align-items: center; }
 }
 @media (max-width:480px) {
   .auth-card { padding: 16px 12px 20px; }

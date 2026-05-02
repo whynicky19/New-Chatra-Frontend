@@ -463,6 +463,7 @@ const submit = async () => {
   .var-section { padding: 12px; }
   .variant-row { flex-wrap: wrap; gap: 6px; }
   .var-upload-btn { min-height: 44px; }
+  .af-rm { width: 32px; height: 32px; font-size: 15px; }
 }
 @media (max-width:480px) {
   .modal-body { padding: 12px 12px; }

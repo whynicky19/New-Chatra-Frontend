@@ -196,7 +196,7 @@ onUnmounted(()=>{if(import.meta.client)window.removeEventListener('resize',_resi
   .av-img{width:40px;height:40px}
   .sr-btn{width:44px;height:44px}
   .sr-item{min-height:56px;padding:12px 14px}
-  .search-clear{min-width:32px;min-height:32px;font-size:20px}
+  .search-clear{min-width:44px;min-height:44px;font-size:20px}
 }
 @media (max-width:480px){
   .clp-head{padding:12px 10px 6px}
