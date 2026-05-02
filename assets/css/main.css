@@ -170,7 +170,7 @@ html.dark ::-webkit-scrollbar-thumb:hover{background:rgba(0,177,201,.4)}
 
 /* ====== MODAL ====== */
 .overlay{position:fixed;inset:0;background:rgba(0,30,36,.55);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
-.modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-2xl);padding:26px;width:100%;max-width:480px;box-shadow:var(--sh-lg)}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-2xl);padding:26px;width:100%;max-width:480px;box-shadow:var(--sh-lg);max-height:calc(100vh - 40px);overflow-y:auto}
 .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .modal-title{font-family:'Outfit',sans-serif;font-size:17px;font-weight:800;color:var(--text1)}
 .modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:22px;padding-top:18px;border-top:1px solid var(--border)}

@@ -18,6 +18,34 @@
         </div>
         <div v-if="emailTouched && !email" class="nick-hint err">{{ t('register.email_required') }}</div>
       </div>
+
+      <!-- ГРУППА -->
+      <div class="frow" style="position:relative">
+        <label class="flabel">Группа <span style="color:var(--red)">*</span></label>
+        <input
+          v-model="groupQuery"
+          class="input"
+          placeholder="Например: ИСУ-21"
+          autocomplete="off"
+          @input="onGroupInput"
+          @blur="onGroupBlur"
+          @focus="showDropdown = true"
+        />
+        <!-- Выпадающий список -->
+        <div v-if="showDropdown && groupSuggestions.length" class="group-dropdown">
+          <div
+            v-for="g in groupSuggestions"
+            :key="g"
+            class="group-item"
+            @mousedown.prevent="selectGroup(g)"
+          >
+            {{ g }}
+          </div>
+        </div>
+        <div v-if="groupTouched && !group" class="nick-hint err">Выбери группу из списка</div>
+        <div v-if="group" class="nick-hint ok">✓ {{ group }}</div>
+      </div>
+
       <div class="frow">
         <label class="flabel">{{ t('login.password') }}</label>
         <input v-model="pw" type="password" class="input" :placeholder="t('register.pw_placeholder')" required minlength="6"/>
@@ -26,6 +54,7 @@
           <span class="str-lbl">{{scoreLabel}}</span>
         </div>
       </div>
+
       <button type="submit" class="btn btn-teal w-full btn-lg" :disabled="loading||!canSubmit">
         <div v-if="loading" class="spinner" style="width:15px;height:15px;border-width:2px;border-color:rgba(255,255,255,.3);border-top-color:#fff"></div>
         <span v-else>{{ t('register.submit') }}</span>
@@ -34,23 +63,62 @@
     <p class="auth-link-row">{{ t('register.has_account') }} <NuxtLink to="/login" style="color:var(--teal);font-weight:500">{{ t('register.login_link') }}</NuxtLink></p>
   </div>
 </template>
+
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { navigateTo } from '#app'
 import { useAuth } from '~/composables/useAuth'
 import { useToast } from '~/composables/useToast'
 import { useI18n } from '~/composables/useI18n'
+import { useApi } from '~/services/api'  // ← добавили
 definePageMeta({ layout: 'auth' })
+
 const { register } = useAuth()
 const toast = useToast()
 const { t } = useI18n()
+const api = useApi()  // ← добавили
 
-const nick = ref(''); const fullname = ref(''); const email = ref(''); const pw = ref(''); const role = ref('student'); const loading = ref(false)
+const nick = ref(''); const fullname = ref(''); const email = ref(''); const pw = ref('')
+const role = ref('student'); const loading = ref(false)
 const emailTouched = ref(false)
+
+// группа
+const group = ref('')
+const groupQuery = ref('')
+const groupSuggestions = ref<string[]>([])
+const showDropdown = ref(false)
+const groupTouched = ref(false)
+
+// ← заменили на запрос к бэкенду
+const onGroupInput = async () => {
+  groupTouched.value = true
+  group.value = ''
+  const q = groupQuery.value.trim()
+  if (!q) { groupSuggestions.value = []; showDropdown.value = false; return }
+  try {
+    const { data } = await api.get(`/auth/groups/search?q=${encodeURIComponent(q)}`)
+    groupSuggestions.value = data
+    showDropdown.value = groupSuggestions.value.length > 0
+  } catch {
+    groupSuggestions.value = []
+  }
+}
+
+const selectGroup = (g: string) => {
+  group.value = g
+  groupQuery.value = g
+  showDropdown.value = false
+}
+
+const onGroupBlur = () => {
+  setTimeout(() => { showDropdown.value = false }, 150)
+  groupTouched.value = true
+}
+
 const emailOk = computed(() => /^[^\s@]+@(gmail\.com|icloud\.com)$/.test(email.value.trim()))
 const onEmailInput = () => { emailTouched.value = true }
 const fullnameOk = computed(() => fullname.value.trim().split(' ').filter(Boolean).length >= 2)
-const canSubmit = computed(() => fullnameOk.value && emailOk.value && pw.value.length>=6)
+const canSubmit = computed(() => fullnameOk.value && emailOk.value && pw.value.length >= 6 && !!group.value)
 
 const pwScore = computed(() => {
   const p = pw.value; if (!p) return 0; let s = 0
@@ -65,7 +133,7 @@ const scoreLabel = computed(() => score.value<=40?t('register.pw_weak'):score.va
 const sub = async () => {
   if (!canSubmit.value) return
   loading.value = true
-  const ok = await register(email.value, pw.value, role.value, fullname.value.trim())
+  const ok = await register(email.value, pw.value, role.value, fullname.value.trim(), group.value)
   if (ok) {
     localStorage.setItem('_pending_fullname', fullname.value.trim())
     await navigateTo('/login')
@@ -73,6 +141,7 @@ const sub = async () => {
   loading.value = false
 }
 </script>
+
 <style scoped>
 .auth-card{background:#ffffff;border:1px solid rgba(0,177,201,0.2);border-radius:var(--r-2xl);padding:32px;width:100%;max-width:420px;margin:0 auto;box-shadow:0 8px 40px rgba(0,120,140,0.12)}
 .auth-title{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px;color:#0d2d33}
@@ -84,20 +153,17 @@ const sub = async () => {
 .str-bar{flex:1;height:3px;background:var(--surface3);border-radius:3px;overflow:hidden;max-width:100px}
 .str-fill{height:100%;border-radius:3px;transition:all .3s}
 .str-lbl{font-size:11px;color:var(--text4)}
-.role-grid{display:flex;gap:8px}
-.role-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;border:1px solid var(--border2);border-radius:var(--r-md);font-size:13px;font-weight:500;color:var(--text2);background:var(--surface);cursor:pointer;transition:all .15s}
-.role-btn:hover{border-color:var(--teal);color:var(--teal)}
-.role-btn.active{border-color:var(--teal);background:var(--teal-l);color:var(--teal)}
 .auth-link-row{text-align:center;font-size:13px;color:var(--text3);margin-top:20px}
-/* Gesture verification box */
-.gesture-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px}
-.gesture-done{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--green-l);border:1px solid var(--green);border-radius:var(--r-md);font-size:13px;font-weight:600;color:var(--green)}
+
+/* Выпадающий список групп */
+.group-dropdown{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid rgba(0,177,201,0.3);border-radius:var(--r-md);box-shadow:0 4px 20px rgba(0,0,0,0.1);z-index:100;max-height:200px;overflow-y:auto;margin-top:2px}
+.group-item{padding:10px 14px;font-size:14px;color:#0d2d33;cursor:pointer;transition:background .15s}
+.group-item:hover{background:var(--teal-l, #e6f9fb);color:var(--teal)}
 
 @media (max-width:768px) {
   .auth-card { padding: 20px 14px 24px; border-radius: var(--r-xl); max-width: 100%; width: 100%; box-shadow: none; border: 1px solid rgba(0,177,201,0.15); }
   .auth-title { font-size: 18px; }
   .auth-sub { margin-bottom: 16px; font-size: 13px; }
-  .auth-form { gap: 0; }
   .input { font-size: 16px !important; }
   .btn-lg { min-height: 50px; font-size: 15px; }
   .frow { margin-bottom: 12px; }

@@ -31,6 +31,31 @@
       <div class="frow"><label class="flabel">Период</label><input v-model="period" class="input" placeholder="Например: 2024-2025"/></div>
       <div class="frow"><label class="flabel">Учитель / Преподаватель</label><input v-model="teacher" class="input" placeholder="Ваше имя"/></div>
 
+      <!-- Группа -->
+      <div class="frow" style="position:relative">
+        <label class="flabel">Группа</label>
+        <input
+          v-model="groupQuery"
+          class="input"
+          placeholder="Например: ИСУ-21"
+          autocomplete="off"
+          @input="onGroupInput"
+          @blur="onGroupBlur"
+          @focus="showGroupDropdown = true"
+        />
+        <div v-if="showGroupDropdown && groupSuggestions.length" class="group-dropdown">
+          <div
+            v-for="g in groupSuggestions"
+            :key="g"
+            class="group-item"
+            @mousedown.prevent="selectGroup(g)"
+          >
+            {{ g }}
+          </div>
+        </div>
+        <div v-if="group" class="nick-hint ok">✓ {{ group }}</div>
+      </div>
+
       <!-- Общие критерии оценивания -->
       <div class="frow">
         <div class="criteria-header">
@@ -63,12 +88,42 @@
 import { ref } from 'vue'
 import { useToast } from '~/composables/useToast'
 import { usePostsSvc } from '~/services/posts'
+import { useApi } from '~/services/api'
 const emit = defineEmits<{close:[]; created:[p:any]}>()
-const postsSvc = usePostsSvc(); const toast = useToast()
+const postsSvc = usePostsSvc(); const toast = useToast(); const api = useApi()
 const title = ref(''); const period = ref(''); const teacher = ref(''); const description = ref(''); const loading = ref(false)
 const coverPreview = ref<string|null>(null); const coverBase64 = ref<string|null>(null)
 const fileInput = ref<HTMLInputElement|null>(null)
 const defaultCriteria = ref<{name: string; weight: number}[]>([])
+
+// группа
+const group = ref('')
+const groupQuery = ref('')
+const groupSuggestions = ref<string[]>([])
+const showGroupDropdown = ref(false)
+
+const onGroupInput = async () => {
+  group.value = ''
+  const q = groupQuery.value.trim()
+  if (!q) { groupSuggestions.value = []; showGroupDropdown.value = false; return }
+  try {
+    const { data } = await api.get(`/auth/groups/search?q=${encodeURIComponent(q)}`)
+    groupSuggestions.value = data
+    showGroupDropdown.value = groupSuggestions.value.length > 0
+  } catch {
+    groupSuggestions.value = []
+  }
+}
+
+const selectGroup = (g: string) => {
+  group.value = g
+  groupQuery.value = g
+  showGroupDropdown.value = false
+}
+
+const onGroupBlur = () => {
+  setTimeout(() => { showGroupDropdown.value = false }, 150)
+}
 
 const addCriterion = () => defaultCriteria.value.push({ name: '', weight: 10 })
 
@@ -89,6 +144,7 @@ const submit = async () => {
       type: 'class', period: period.value, teacher: teacher.value,
       description: description.value, members: 1, color: '',
       cover_image: coverBase64.value || '',
+      group: group.value || '',
       default_criteria: defaultCriteria.value.filter(c => c.name.trim() && c.weight > 0)
     })
     const p = await postsSvc.create(title.value, body)
@@ -123,6 +179,11 @@ const submit = async () => {
 .no-crit { font-size: 12px; color: var(--text4); padding: 8px 0; }
 .btn-add-crit { font-size: 12px; font-weight: 600; color: var(--purple, #00B1C9); background: rgba(0,177,201,.08); border: 1px solid rgba(0,177,201,.2); border-radius: 6px; padding: 4px 10px; cursor: pointer; transition: all .15s; }
 .btn-add-crit:hover { background: rgba(0,177,201,.15); }
+.group-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface, #fff); border: 1px solid rgba(0,177,201,0.3); border-radius: var(--r-md); box-shadow: 0 4px 20px rgba(0,0,0,0.1); z-index: 200; max-height: 180px; overflow-y: auto; margin-top: 2px; }
+.group-item { padding: 10px 14px; font-size: 14px; color: var(--text1, #0d2d33); cursor: pointer; transition: background .15s; }
+.group-item:hover { background: rgba(0,177,201,.08); color: var(--teal); }
+.nick-hint { font-size: 12px; font-weight: 500; margin-top: 4px; }
+.nick-hint.ok { color: var(--green); }
 
 @media (max-width:768px) {
   .cover-upload { height: 110px; }

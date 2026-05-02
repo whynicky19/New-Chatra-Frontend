@@ -41,6 +41,14 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:auto;opacity:.4"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
               </div>
             </div>
+            <!-- ГРУППА -->
+            <div class="field-group">
+              <label class="field-label">ГРУППА</label>
+              <div class="input field-input field-locked">
+                {{ auth.user?.group || '—' }}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:auto;opacity:.4"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              </div>
+            </div>
             <div v-if="auth.isAdmin" class="field-group">
               <label class="field-label">{{ t('settings.institution') }}</label>
               <input value="Chatra Academy" class="input field-input" readonly style="opacity:.7;cursor:default"/>

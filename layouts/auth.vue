@@ -36,14 +36,12 @@ onMounted(() => {
   const b = document.body.style
   s.overflow = 'hidden'; s.height = '100%'; s.overscrollBehavior = 'none'
   b.overflow = 'hidden'; b.height = '100%'; b.overscrollBehavior = 'none'
-  b.position = 'fixed'; b.width = '100%'
 })
 onUnmounted(() => {
   const s = document.documentElement.style
   const b = document.body.style
   s.overflow = ''; s.height = ''; s.overscrollBehavior = ''
   b.overflow = ''; b.height = ''; b.overscrollBehavior = ''
-  b.position = ''; b.width = ''
 })
 
 onMounted(() => {
@@ -153,10 +151,12 @@ onUnmounted(() => cancelAnimationFrame(animId))
   gap: 28px; padding: 24px 20px;
   width: 100%; max-width: 440px; margin: 0 auto;
   overflow-y: auto; overflow-x: hidden;
-  max-height: 100vh; max-height: 100dvh;
+  max-height: calc(100dvh - 10vh);
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   animation: content-enter 0.7s cubic-bezier(0.16,1,0.3,1) both;
 }
+.auth-content::-webkit-scrollbar { display: none; }
 @keyframes content-enter { from{opacity:0;transform:translateY(24px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
 .auth-brand { display:flex;align-items:center;justify-content:center;flex-shrink:0;animation:brand-enter 0.6s cubic-bezier(0.16,1,0.3,1) 0.1s both }
 @keyframes brand-enter { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
@@ -181,7 +181,7 @@ onUnmounted(() => cancelAnimationFrame(animId))
 
 @media (max-width:768px) {
   .auth-shell { padding-bottom: 8vh; }
-  .auth-content { padding: 16px 12px; gap: 12px; max-width: 100%; width: 100%; }
+  .auth-content { padding: 16px 12px; gap: 12px; max-width: 100%; width: 100%; max-height: calc(100dvh - 8vh); }
   .auth-logo-img { width: 110px; }
   .orb-1 { width: 300px; height: 300px; }
   .orb-2 { width: 500px; height: 500px; }
@@ -190,7 +190,7 @@ onUnmounted(() => cancelAnimationFrame(animId))
 }
 @media (max-width:480px) {
   .auth-shell { padding-bottom: 6vh; }
-  .auth-content { padding: 12px 10px; gap: 10px; }
+  .auth-content { padding: 12px 10px; gap: 10px; max-height: calc(100dvh - 6vh); }
   .auth-logo-img { width: 90px; }
   .lang-btn { padding: 5px 10px; }
 }
