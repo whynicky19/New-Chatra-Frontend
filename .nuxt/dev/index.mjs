@@ -2015,7 +2015,7 @@ async function errorHandler(error, event) {
 
 const rootDir = "C:/Users/Asus/Desktop/Projects/Chatra/frontend";
 
-const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"}],"link":[{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"}],"style":[],"script":[{"innerHTML":"(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');else if(t==='light')document.documentElement.classList.remove('dark');else if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark');}catch(e){}})();","type":"text/javascript"}],"noscript":[],"title":"Chatra"};
+const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"}],"link":[{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"},{"rel":"icon","type":"image/x-icon","href":"/favicon.ico"},{"rel":"icon","type":"image/png","sizes":"32x32","href":"/logo.png"},{"rel":"apple-touch-icon","sizes":"180x180","href":"/logo.png"}],"style":[],"script":[{"innerHTML":"(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');else if(t==='light')document.documentElement.classList.remove('dark');else if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark');}catch(e){}})();","type":"text/javascript"}],"noscript":[],"title":"Chatra"};
 
 const appRootTag = "div";
 
@@ -2117,19 +2117,19 @@ _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
 const assets = {
-  "/index.mjs": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1a266-zcFAW6dz/5S+iTe8EIHWL/O7sC8\"",
-    "mtime": "2026-05-03T11:45:08.318Z",
-    "size": 107110,
-    "path": "index.mjs"
-  },
   "/index.mjs.map": {
     "type": "application/json",
     "etag": "\"6a30c-nn7ZAt2P3pXPzxBHHGLx5MYuogg\"",
-    "mtime": "2026-05-03T11:45:08.318Z",
+    "mtime": "2026-05-03T14:34:10.570Z",
     "size": 434956,
     "path": "index.mjs.map"
+  },
+  "/index.mjs": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1a326-aqQkVzdfP4zFwVjkeCIIE9we54o\"",
+    "mtime": "2026-05-03T14:34:10.570Z",
+    "size": 107302,
+    "path": "index.mjs"
   }
 };
 
