@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <!-- ══ Main layout ══ -->
+      <!-- ══ Main sidebar ══ -->
       <div class="cd-layout">
         <!-- Left content -->
         <div class="cd-main">
@@ -469,12 +469,12 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from '#app'
-import { useToast } from '~/composables/useToast'
+import { useToast } from '~/composables/useToast/useToast'
 import { usePostsSvc } from '~/services/posts'
 import { useAssignmentsSvc } from '~/services/assignments'
 import { useRatingSvc } from '~/services/rating'
 import { useAuthStore } from '~/stores/auth.store'
-import { useI18n } from '~/composables/useI18n'
+import { useI18n } from '~/composables/usel18n/useI18n'
 import type { Assignment, Submission } from '~/services/assignments'
 
 definePageMeta({ layout: 'default' })

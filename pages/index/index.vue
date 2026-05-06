@@ -6,34 +6,38 @@
         <div class="pg-head">
           <div class="pg-head-left">
             <h1 class="pg-title">{{ t('classes.catalog') }}</h1>
-            <p class="pg-sub">{{ lang === 'ru' ? 'Исследуйте новые горизонты знаний с нашими интерактивными модулями.' : 'Explore new horizons of knowledge with our interactive modules.' }}</p>
+            <p class="pg-sub">{{ t('classes.catalog_sub') }}</p>
           </div>
           <div class="pg-head-r">
             <button v-if="auth.isTeacher" class="btn btn-outline-teal" @click="showCreate=true">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
               {{ t('classes.create') }}
             </button>
-            <button class="btn btn-teal" @click="showJoin=true">
-              {{ t('classes.join_code') }}
+            <button class="btn btn-teal" @click="showJoin=true">{{ t('classes.join_code') }}</button>
+            <!-- Lang switcher (mobile-visible) -->
+            <div class="head-lang-switch">
+              <button v-for="l in [{code:'ru',label:'RU'},{code:'en',label:'EN'},{code:'kk',label:'KZ'}]" :key="l.code"
+                :class="['head-lang-btn', { active: lang === l.code }]" @click="setLang(l.code as any)">{{ l.label }}</button>
+            </div>
+            <!-- Theme toggle -->
+            <button class="theme-toggle" @click="toggleTheme" :title="isDark ? 'Светлая тема' : 'Тёмная тема'">
+              <div class="toggle-track" :class="{dark: isDark}">
+                <div class="toggle-thumb">
+                  <svg v-if="isDark" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                  <svg v-else width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                </div>
+              </div>
             </button>
           </div>
         </div>
 
-        <!-- Grid -->
-        <div class="classes-grid">
-          <template v-if="loading">
-            <div v-for="n in 6" :key="n" class="class-card skeleton-card">
-              <div class="skel-cover"></div>
-              <div class="skel-body">
-                <div class="skel-line skel-title"></div>
-                <div class="skel-line skel-desc"></div>
-                <div class="skel-line skel-desc short"></div>
-                <div class="skel-line skel-meta"></div>
-              </div>
-            </div>
-          </template>
 
-          <div v-if="!loading && !visibleClasses.length" class="empty-state" style="grid-column:1/-1">
+        <div class="classes-grid">
+          <div v-if="loading" style="grid-column:1/-1;display:flex;justify-content:center;padding:60px">
+            <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
+          </div>
+
+          <div v-else-if="!visibleClasses.length" class="empty-state" style="grid-column:1/-1">
             <div class="es-icon-wrap">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
             </div>
@@ -42,20 +46,22 @@
             <button class="btn btn-teal es-btn" @click="showJoin=true">{{ t('classes.join_code') }}</button>
           </div>
 
-          <template v-if="!loading && visibleClasses.length">
-            <!-- Class cards -->
+          <template v-else>
+
             <div v-for="cls in visibleClasses" :key="cls.id" class="class-card" @click="goClass(cls.id)">
-              <!-- Cover image -->
-              <div class="card-cover" :style="cls.cover_image ? {} : {background: coverGrad(cls.id)}">
-                <img v-if="cls.cover_image" :src="cls.cover_image" class="card-cover-img" loading="lazy" decoding="async"/>
-                <!-- Code chip for teachers -->
+              <div class="card-cover" :style="cls.cover_image ? {backgroundImage:`url(${cls.cover_image})`,backgroundSize:'cover',backgroundPosition:'center'} : {background: coverGrad(cls.id)}">
+
                 <div v-if="auth.isTeacher || auth.isAdmin" class="card-code-chip" @click.stop="copyClassCode(cls.id)">
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
                   {{ codeFor(cls.id) }}
                 </div>
+
+                <button v-if="auth.isTeacher || auth.isAdmin" class="card-edit-btn" @click.stop="openEditClass(cls)" title="Редактировать">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
               </div>
 
-              <!-- Card body -->
+
               <div class="card-body">
                 <div class="card-title-row">
                   <h3 class="card-name">{{ cls.title }}</h3>
@@ -63,10 +69,15 @@
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
                   </div>
                 </div>
-                <p class="card-desc">{{ cls.description || (lang==='ru' ? 'Нажмите для просмотра' : 'Click to view') }}</p>
+                <p class="card-desc">{{ cls.description || (lang==='ru' ? 'Нажмите для просмотра' : lang==='kk' ? 'Көру үшін басыңыз' : 'Click to view') }}</p>
+
+                <div class="card-teacher" v-if="cls.teacher_name || cls.teacher">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  {{ cls.teacher_name || cls.teacher }}
+                </div>
                 <div class="card-meta">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  {{ lectureCount(cls.id) }} {{ lang === 'ru' ? 'уроков' : 'lessons' }}
+                  {{ lectureCount(cls.id) }} {{ lang === 'ru' ? 'уроков' : lang === 'kk' ? 'сабақ' : 'lessons' }}
                 </div>
                 <div class="card-footer">
                   <div class="card-action-row">
@@ -74,7 +85,7 @@
                       {{ getActionLabel(cls) }} →
                     </button>
                     <button v-else class="card-action-btn" @click.stop="goClass(cls.id)">
-                      {{ lang === 'ru' ? 'Открыть курс' : 'Open course' }} →
+                      {{ lang === 'ru' ? 'Открыть курс' : lang === 'kk' ? 'Курсты ашу' : 'Open course' }} →
                     </button>
                     <div class="card-controls">
                       <button v-if="!auth.isTeacher" class="ctrl-btn" @click.stop="leaveClass(cls.id)" :title="t('classes.left')">
@@ -89,20 +100,20 @@
               </div>
             </div>
 
-            <!-- Add new class card — STUDENTS ONLY -->
+
             <div v-if="!auth.isTeacher && !auth.isAdmin" class="class-card add-card" @click="showJoin=true">
               <div class="add-card-inner">
                 <div class="add-plus">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
                 </div>
-                <div class="add-title">{{ lang === 'ru' ? 'Добавить новый предмет в программу' : 'Add new subject to program' }}</div>
-                <div class="add-sub">{{ lang === 'ru' ? 'Персонализируйте своё обучение' : 'Personalize your learning' }}</div>
+                <div class="add-title">{{ lang === 'ru' ? 'Добавить новый предмет в программу' : lang === 'kk' ? 'Бағдарламаға жаңа пән қосу' : 'Add new subject to program' }}</div>
+                <div class="add-sub">{{ lang === 'ru' ? 'Персонализируйте своё обучение' : lang === 'kk' ? 'Оқуыңызды жекелендіріңіз' : 'Personalize your learning' }}</div>
               </div>
             </div>
           </template>
         </div>
 
-        <!-- Upcoming deadlines -->
+
         <div v-if="upcomingAssignments.length" class="deadlines-section">
           <div class="deadlines-label">{{ t('classes.upcoming') }}</div>
           <div class="deadlines-list">
@@ -120,10 +131,51 @@
       </div>
     </div>
 
-    <!-- Create modal -->
+
     <CreateClassModal v-if="showCreate" @close="showCreate=false" @created="onCreated"/>
 
-    <!-- Join by code modal -->
+
+    <div v-if="editingClass" class="overlay" @click.self="editingClass=null">
+      <div class="modal anim-scale edit-class-modal">
+        <div class="modal-head">
+          <span class="modal-title">{{ lang==='ru' ? 'Редактировать класс' : lang==='kk' ? 'Сыныпты өңдеу' : 'Edit Class' }}</span>
+          <button class="btn btn-icon btn-ghost" @click="editingClass=null">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="edit-form">
+
+          <div class="edit-cover-preview" :style="editForm.cover_image ? {backgroundImage:`url(${editForm.cover_image})`,backgroundSize:'cover',backgroundPosition:'center'} : {background: coverGrad(editingClass.id)}">
+            <label class="edit-cover-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              {{ lang==='ru' ? 'Загрузить обложку' : lang==='kk' ? 'Мұқаба жүктеу' : 'Upload Cover' }}
+              <input type="file" accept="image/*" class="hidden-file" @change="onCoverFile"/>
+            </label>
+          </div>
+          <div class="edit-field">
+            <label class="field-label">{{ lang==='ru' ? 'НАЗВАНИЕ КЛАССА' : lang==='kk' ? 'СЫНЫП АТАУЫ' : 'CLASS NAME' }}</label>
+            <input v-model="editForm.title" class="field-input" :placeholder="lang==='ru'?'Название класса...':lang==='kk'?'Сынып атауы...':'Class name...'"/>
+          </div>
+          <div class="edit-field">
+            <label class="field-label">{{ lang==='ru' ? 'ОПИСАНИЕ' : lang==='kk' ? 'СИПАТТАМА' : 'DESCRIPTION' }}</label>
+            <textarea v-model="editForm.description" class="field-textarea" rows="3" :placeholder="lang==='ru'?'Описание...':lang==='kk'?'Сипаттама...':'Description...'"></textarea>
+          </div>
+          <div class="edit-field">
+            <label class="field-label">{{ lang==='ru' ? 'ИМЯ УЧИТЕЛЯ' : lang==='kk' ? 'МҰҒАЛІМ АТЫ' : 'TEACHER NAME' }}</label>
+            <input v-model="editForm.teacher_name" class="field-input" :placeholder="lang==='ru'?'Имя учителя...':lang==='kk'?'Мұғалім аты...':'Teacher name...'"/>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-white" @click="editingClass=null">{{ t('general.cancel') }}</button>
+          <button class="btn btn-teal" :disabled="editSaving" @click="saveEditClass">
+            <div v-if="editSaving" class="spinner" style="width:13px;height:13px;border-width:2px;border-color:rgba(255,255,255,.3);border-top-color:#fff"></div>
+            <span v-else>{{ t('general.save') }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+
     <div v-if="showJoin" class="overlay" @click.self="showJoin=false">
       <div class="modal anim-scale join-modal">
         <div class="modal-head">
@@ -146,7 +198,7 @@
               <div class="found-overlay"></div>
               <span class="found-name">{{foundClass.title}}</span>
             </div>
-            <div class="found-meta">{{foundClass.teacher || (lang==='ru'?'Преподаватель':'Teacher')}}</div>
+            <div class="found-meta">{{foundClass.teacher_name || foundClass.teacher || (lang==='ru'?'Преподаватель':lang==='kk'?'Мұғалім':'Teacher')}}</div>
           </div>
         </div>
         <div class="modal-foot">
@@ -193,10 +245,28 @@ import { useToast } from '~/composables/useToast/useToast'
 import { useI18n } from '~/composables/usel18n/useI18n'
 definePageMeta({ layout: 'default' })
 const auth = useAuthStore(); const postsSvc = usePostsSvc(); const toast = useToast(); const router = useRouter()
-const { t, lang } = useI18n()
+const { t, lang, setLang } = useI18n()
 const allPosts = ref<any[]>([]); const loading = ref(true); const showCreate = ref(false)
 const showJoin = ref(false); const joining = ref(false); const joinError = ref('')
 const deletingClass = ref<any>(null); const deleting = ref(false)
+const editingClass = ref<any>(null)
+const editForm = ref({ title: '', description: '', teacher_name: '', cover_image: '' })
+const editSaving = ref(false)
+
+// Theme toggle
+const isDark = ref(false)
+const toggleTheme = () => {
+  isDark.value = !isDark.value
+  if (import.meta.client) {
+    document.documentElement.classList.toggle('dark', isDark.value)
+    localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+  }
+}
+onMounted(() => {
+  if (import.meta.client) {
+    isDark.value = document.documentElement.classList.contains('dark') || localStorage.getItem('theme') === 'dark'
+  }
+})
 
 const codeChars = ref<string[]>(['','','','','',''])
 const codeRefs = ref<HTMLInputElement[]>([])
@@ -236,15 +306,15 @@ const coverGrad = (id: number) => covers[id % covers.length]
 const allClasses = computed(() =>
   allPosts.value
     .filter(p => { try { const b=JSON.parse(p.body); return b.type==='class' } catch { return false } })
-    .map(p => { try { const b=JSON.parse(p.body); return {...p,...b,title:p.title,cover_image:b.cover_image||null,description:b.description||''} } catch { return p } })
+    .map(p => { try { const b=JSON.parse(p.body); return {...p,...b,title:p.title,cover_image:b.cover_image||null,description:b.description||'',teacher_name:b.teacher_name||b.teacher||''} } catch { return p } })
 )
 const visibleClasses = computed(() => auth.isAdmin ? allClasses.value : allClasses.value.filter(c => joinedIds.value.includes(c.id)))
 const lectureCount = (classId: number) => allPosts.value.filter(p => p.title?.startsWith(`[LECTURE][${classId}]`)).length
 
 const getActionLabel = (cls: any) => {
   const count = lectureCount(cls.id)
-  if (count === 0) return lang.value === 'ru' ? 'Начать обучение' : 'Start learning'
-  return lang.value === 'ru' ? 'Продолжить обучение' : 'Continue learning'
+  if (count === 0) return lang.value === 'ru' ? 'Начать обучение' : lang.value === 'kk' ? 'Оқуды бастау' : 'Start learning'
+  return lang.value === 'ru' ? 'Продолжить обучение' : lang.value === 'kk' ? 'Оқуды жалғастыру' : 'Continue learning'
 }
 
 const codeFor = (id: number) => {
@@ -277,6 +347,47 @@ const fmtDeadline = (d: string) => {
   } catch { return d }
 }
 
+const openEditClass = (cls: any) => {
+  editingClass.value = cls
+  editForm.value = {
+    title: cls.title || '',
+    description: cls.description || '',
+    teacher_name: cls.teacher_name || cls.teacher || '',
+    cover_image: cls.cover_image || ''
+  }
+}
+
+const onCoverFile = async (e: Event) => {
+  const file = (e.target as HTMLInputElement).files?.[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = (ev) => { editForm.value.cover_image = ev.target?.result as string }
+  reader.readAsDataURL(file)
+}
+
+const saveEditClass = async () => {
+  if (!editingClass.value) return
+  editSaving.value = true
+  try {
+    const post = allPosts.value.find(p => p.id === editingClass.value.id)
+    if (!post) throw new Error('not found')
+    let body: any = {}
+    try { body = JSON.parse(post.body) } catch {}
+    body.type = 'class'
+    body.description = editForm.value.description
+    body.teacher_name = editForm.value.teacher_name
+    body.cover_image = editForm.value.cover_image
+    const updatedTitle = editForm.value.title
+    await postsSvc.update(post.id, updatedTitle, JSON.stringify(body))
+    // Update local state
+    const idx = allPosts.value.findIndex(p => p.id === editingClass.value.id)
+    if (idx !== -1) allPosts.value[idx] = { ...allPosts.value[idx], title: updatedTitle, body: JSON.stringify(body) }
+    toast.ok(lang.value==='ru' ? 'Класс обновлён' : lang.value==='kk' ? 'Сынып жаңартылды' : 'Class updated')
+    editingClass.value = null
+  } catch(e: any) { toast.err(e?.response?.data?.detail || t('general.error')) }
+  finally { editSaving.value = false }
+}
+
 const joinClass = () => {
   joining.value = true; joinError.value = ''
   const found = foundClass.value
@@ -303,8 +414,10 @@ const copyClassCode = (id: number) => {
 }
 const onCreated = async (cls: any) => { showCreate.value=false; await load(); if (cls?.id && !joinedIds.value.includes(cls.id)) { joinedIds.value.push(cls.id); saveJoined() } }
 const load = async () => { loading.value=true; try { allPosts.value=await postsSvc.list() } catch { toast.err(t('general.error')) } finally { loading.value=false } }
-watch(() => auth.user?.id, (id) => { if (id) loadJoined() }, { immediate: true })
-onMounted(()=>{ load() })
+onMounted(()=>{ loadJoined(); load() })
+
+// Re-load joined IDs whenever the logged-in user changes (fixes disappearing classes after re-login)
+watch(() => auth.user?.id, (newId) => { if (newId) loadJoined() })
 </script>
 
 <style scoped>
@@ -313,31 +426,46 @@ onMounted(()=>{ load() })
 .content-area{padding:32px 32px 80px;width:100%;box-sizing:border-box}
 
 /* Header */
-.pg-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:32px;gap:20px}
-.pg-head-left{flex:1}
-.pg-title{font-family:'Outfit',sans-serif;font-size:28px;font-weight:900;color:var(--text1);margin-bottom:6px;letter-spacing:-.02em}
-.pg-sub{font-size:14px;color:var(--text4);line-height:1.5;max-width:500px}
+.pg-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;gap:20px}
+.pg-head-left{flex:1;text-align:center}
+.pg-title{font-family:'Outfit',sans-serif;font-size:28px;font-weight:900;color:var(--text1);margin-bottom:6px;letter-spacing:-.02em;text-align:center}
+.pg-sub{font-size:14px;color:var(--text4);line-height:1.5;max-width:500px;text-align:center;margin:0 auto}
 .pg-head-r{display:flex;gap:10px;align-items:center;flex-shrink:0}
 .btn-outline-teal{display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--r-md);border:1.5px solid var(--teal);background:transparent;color:var(--teal);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
 .btn-outline-teal:hover{background:var(--teal-l)}
 
+/* Theme toggle */
+.head-lang-switch{display:none;align-items:center;gap:2px;background:var(--surface2);border:1px solid var(--border);border-radius:30px;padding:3px}
+.head-lang-btn{padding:4px 11px;border-radius:24px;font-size:11px;font-weight:700;letter-spacing:.05em;cursor:pointer;transition:all .15s;background:none;border:none;color:var(--text4)}
+.head-lang-btn:hover{color:var(--teal)}
+.head-lang-btn.active{background:var(--teal);color:#fff;box-shadow:0 2px 6px rgba(0,177,201,0.3)}
+.theme-toggle{background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center}
+.toggle-track{width:46px;height:26px;border-radius:100px;background:var(--surface3);border:1.5px solid var(--border2);position:relative;transition:all .25s;display:flex;align-items:center}
+.toggle-track.dark{background:var(--teal-d,#1a3a44);border-color:var(--teal)}
+.toggle-thumb{width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18);position:absolute;left:2px;display:flex;align-items:center;justify-content:center;transition:transform .25s cubic-bezier(.34,1.56,.64,1);color:#888}
+.toggle-track.dark .toggle-thumb{transform:translateX(20px);color:var(--teal)}
+
 /* Grid */
 .classes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;margin-bottom:32px;width:100%}
 
-/* Class card — new design */
+/* Class card */
 .class-card{background:var(--surface);border-radius:var(--r-xl);overflow:hidden;cursor:pointer;transition:all .2s;box-shadow:var(--sh-xs);border:1px solid var(--border)}
 .class-card:hover{transform:translateY(-4px);box-shadow:var(--sh-md);border-color:rgba(0,177,201,.2)}
 
-.card-cover{position:relative;height:200px;overflow:hidden;background:linear-gradient(135deg,#006475,#009aaf)}
-.card-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.card-code-chip{position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;background:rgba(0,0,0,.5);color:rgba(255,255,255,.95);padding:4px 10px;border-radius:6px;letter-spacing:.1em;backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.18);cursor:pointer;transition:all .15s}
-.card-code-chip:hover{background:rgba(0,177,201,.6)}
+.card-cover{position:relative;height:200px;overflow:hidden;background:linear-gradient(135deg,#006475,#009aaf);display:flex;align-items:flex-end;padding:0}
+.card-code-chip{position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;background:rgba(80,80,80,.75);color:rgba(255,255,255,.92);padding:4px 10px;border-radius:6px;letter-spacing:.08em;backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:all .15s;line-height:1}
+.card-code-chip:hover{background:rgba(60,60,60,.9)}
+.card-code-chip svg{flex-shrink:0;display:block}
+.card-edit-btn{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.2);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;backdrop-filter:blur(4px)}
+.card-edit-btn:hover{background:rgba(0,177,201,.7);border-color:rgba(0,177,201,.5)}
 
 .card-body{padding:18px 18px 16px}
 .card-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px}
 .card-name{font-family:'Outfit',sans-serif;font-size:17px;font-weight:800;color:var(--text1);line-height:1.25;flex:1}
 .card-subject-icon{width:30px;height:30px;border-radius:var(--r-sm);background:var(--teal-l);border:1px solid rgba(0,177,201,.2);display:flex;align-items:center;justify-content:center;color:var(--teal);flex-shrink:0}
-.card-desc{font-size:13px;color:var(--text4);line-height:1.5;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-desc{font-size:13px;color:var(--text4);line-height:1.5;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-teacher{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text3);font-weight:500;margin-bottom:8px}
+.card-teacher svg{flex-shrink:0;color:var(--teal)}
 .card-meta{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text4);margin-bottom:14px}
 .card-footer{border-top:1px solid var(--border);padding-top:14px}
 .card-action-row{display:flex;align-items:center;justify-content:space-between}
@@ -349,7 +477,7 @@ onMounted(()=>{ load() })
 .ctrl-del:hover{background:var(--red-l);border-color:rgba(220,38,38,.3);color:var(--red)}
 
 /* Add card */
-.add-card{background:var(--surface);border:2px dashed var(--border);cursor:pointer;transition:all .2s;min-height:310px;display:flex}
+.add-card{background:var(--surface);border:2px dashed var(--border);cursor:pointer;transition:all .2s;min-height:360px;display:flex}
 .add-card:hover{border-color:rgba(0,177,201,.4);background:var(--teal-l)}
 .add-card-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;gap:12px;flex:1}
 .add-plus{width:48px;height:48px;border-radius:50%;border:2px dashed rgba(0,177,201,.4);color:var(--text4);display:flex;align-items:center;justify-content:center;background:var(--surface2)}
@@ -374,6 +502,20 @@ onMounted(()=>{ load() })
 .es-sub{font-size:14px;color:var(--text4);max-width:300px;line-height:1.6}
 .es-btn{margin-top:8px}
 
+/* Edit class modal */
+.edit-class-modal{max-width:480px;width:100%}
+.edit-form{padding:4px 0 8px;display:flex;flex-direction:column;gap:16px}
+.edit-cover-preview{height:140px;border-radius:var(--r-lg);overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-start;padding:12px;background:var(--surface2)}
+.edit-cover-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;background:rgba(0,0,0,.45);color:#fff;padding:7px 14px;border-radius:var(--r-md);cursor:pointer;border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(4px);transition:all .15s}
+.edit-cover-btn:hover{background:rgba(0,177,201,.6)}
+.hidden-file{display:none}
+.edit-field{display:flex;flex-direction:column;gap:6px}
+.field-label{font-size:11px;font-weight:700;color:var(--text4);letter-spacing:.07em}
+.field-input{padding:10px 14px;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--surface2);color:var(--text1);font-size:14px;font-family:inherit;transition:border-color .15s}
+.field-input:focus{border-color:var(--teal);background:rgba(0,177,201,.04)}
+.field-textarea{padding:10px 14px;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--surface2);color:var(--text1);font-size:14px;font-family:inherit;resize:vertical;transition:border-color .15s}
+.field-textarea:focus{border-color:var(--teal);background:rgba(0,177,201,.04)}
+
 /* Join modal */
 .join-modal{max-width:400px;width:100%}
 .join-icon-wrap{width:50px;height:50px;border-radius:14px;background:var(--teal-l);border:1px solid rgba(0,177,201,.2);display:flex;align-items:center;justify-content:center;color:var(--teal);margin:0 auto 12px}
@@ -392,43 +534,30 @@ onMounted(()=>{ load() })
 .del-body{display:flex;align-items:flex-start;gap:14px;padding:4px 0 18px}
 .del-icon{width:44px;height:44px;border-radius:var(--r-md);background:var(--red-l);border:1px solid rgba(220,38,38,.2);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0}
 .del-text{font-size:14px;color:var(--text2);line-height:1.7}
-/* Skeleton loader */
-@keyframes skel-shine{0%{background-position:-200px 0}100%{background-position:calc(200px + 100%) 0}}
-.skeleton-card{pointer-events:none;cursor:default}
-.skeleton-card:hover{transform:none!important;box-shadow:var(--sh-xs)!important;border-color:var(--border)!important}
-.skel-cover{height:200px;background:linear-gradient(90deg,var(--surface2) 25%,var(--surface3) 50%,var(--surface2) 75%);background-size:400px 100%;animation:skel-shine 1.4s ease infinite}
-.skel-body{padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px}
-.skel-line{border-radius:6px;background:linear-gradient(90deg,var(--surface2) 25%,var(--surface3) 50%,var(--surface2) 75%);background-size:400px 100%;animation:skel-shine 1.4s ease infinite}
-.skel-title{height:18px;width:70%}
-.skel-desc{height:12px;width:90%}
-.skel-desc.short{width:55%}
-.skel-meta{height:11px;width:40%;margin-top:4px}
 
-@media (max-width:768px) {
-  .pg { overflow-x: hidden; max-width: 100vw; }
-  .pg-body { overflow-x: hidden; max-width: 100%; }
-  .content-area { padding: 16px 12px 80px; overflow-x: hidden; }
-  .pg-head { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
-  .pg-head-left { width: 100%; }
-  .pg-head-r { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 8px; }
-  .pg-title { font-size: 22px; }
-  .pg-sub { font-size: 13px; }
-  .btn-outline-teal { min-height: 44px; padding: 10px 16px; }
-  .classes-grid { grid-template-columns: 1fr; gap: 14px; }
-  .card-cover { height: 160px; }
-  .skel-cover { height: 160px; }
-  .add-card { min-height: 120px; }
-  .add-card-inner { padding: 24px 16px; }
-  .ctrl-btn { width: 44px; height: 44px; border-radius: var(--r-md); }
-  .card-action-btn { font-size: 14px; min-height: 44px; padding: 0 4px; }
-  .code-box { width: 40px; height: 48px; font-size: 18px; }
-  .code-boxes { gap: 6px; }
-  .join-modal { max-width: 100%; }
-  .deadlines-section { padding: 16px; }
+@media (max-width:768px){
+  .pg { overflow-x: hidden; }
+  .content-area{padding:16px 12px 80px}
+  .pg-head{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:20px}
+  .pg-head-left{width:100%}
+  .pg-head-r{width:100%;justify-content:flex-start;flex-wrap:wrap;gap:8px}
+  .pg-title{font-size:22px;text-align:left}
+  .pg-sub{text-align:left;margin:0}
+  .head-lang-switch{display:flex}
+  .btn-outline-teal{min-height:44px}
+  .classes-grid{grid-template-columns:1fr;gap:14px}
+  .card-cover{height:160px}
+  .add-card{min-height:120px}
+  .add-card-inner{padding:24px 16px}
+  .ctrl-btn{width:36px;height:36px}
+  .code-box{width:40px;height:48px;font-size:18px}
+  .code-boxes{gap:6px}
+  .deadlines-section{padding:16px}
 }
-@media (max-width:480px) {
-  .content-area { padding: 12px 10px 80px; }
-  .code-box { width: 36px; height: 44px; font-size: 16px; }
-  .code-boxes { gap: 4px; }
+@media (max-width:480px){
+  .content-area{padding:12px 10px 80px}
+  .code-box{width:36px;height:44px;font-size:16px}
+  .code-boxes{gap:4px}
+  .pg-title{font-size:20px}
 }
 </style>

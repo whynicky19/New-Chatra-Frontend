@@ -100,11 +100,11 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useAuthStore } from '~/stores/auth.store'
 import { useChatsStore } from '~/stores/chats.store'
-import { useToast } from '~/composables/useToast'
-import { useI18n } from '~/composables/useI18n'
+import { useToast } from '~/composables/useToast/useToast'
+import { useI18n } from '~/composables/usel18n/useI18n'
 import { useChatsSvc } from '~/services/chats'
 import { useUsersSvc } from '~/services/users'
-import { useChat } from '~/composables/useChat'
+import { useChat } from '~/composables/useChat/useChat'
 definePageMeta({ layout: 'default' })
 const auth=useAuthStore();const chatsStore=useChatsStore();const chatsSvc=useChatsSvc();const usersSvc=useUsersSvc();const toast=useToast();const{connectWs,loadUsers,loadMsgs,startChatPoller}=useChat()
 const { t } = useI18n()
