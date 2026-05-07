@@ -307,4 +307,4 @@ watch(() => auth.user?.id, (id) => { if (id) loadJoined() }, { immediate: true }
 onMounted(()=>{ load() })
 </script>
 
-<style scoped src="~/assets/pages/classes.css."></style>
+<style scoped src="~/assets/pages/classes.css"></style>
