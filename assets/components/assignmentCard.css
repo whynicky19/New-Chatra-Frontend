@@ -1,0 +1,34 @@
+.asgn-card { display: flex; align-items: center; gap: 16px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); cursor: pointer; transition: all .18s; position: relative; overflow: hidden; }
+.asgn-card:hover { background: var(--surface2); border-color: var(--border2); transform: translateY(-1px); box-shadow: var(--sh-sm); }
+
+.asgn-accent { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+.accent-blue { background: var(--teal); }
+.accent-green { background: var(--green); }
+.accent-red { background: var(--red); }
+.accent-purple { background: #4dd6e8; }
+
+.asgn-ico-wrap { width: 44px; height: 44px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ico-blue { background: rgba(0,177,201,.12); color: var(--teal); border: 1px solid rgba(0,177,201,.18); }
+.ico-green { background: rgba(74,222,128,.1); color: var(--green); border: 1px solid rgba(74,222,128,.15); }
+.ico-red { background: var(--red-l); color: var(--red); border: 1px solid rgba(248,113,113,.15); }
+
+.asgn-main { flex: 1; min-width: 0; }
+.asgn-title { font-size: 14px; font-weight: 700; color: var(--text1); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.asgn-desc { font-size: 12px; color: var(--text3); margin-bottom: 7px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.asgn-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+.meta-due, .meta-score, .meta-files { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text4); font-weight: 500; }
+.meta-due { color: var(--text3); }
+.meta-due.overdue { color: var(--red); }
+.meta-due.soon { color: var(--yellow); }
+.meta-score { color: var(--teal); font-weight: 600; }
+
+.asgn-status-wrap { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.asgn-arrow { color: var(--text4); }
+
+.status-pill { display: flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 100px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.status-pill.submitted { background: rgba(74,222,128,.1); color: var(--green); border: 1px solid rgba(74,222,128,.2); }
+.status-pill.graded { background: rgba(74,222,128,.1); color: var(--green); border: 1px solid rgba(74,222,128,.2); }
+.status-pill.grading { background: rgba(0,177,201,.1); color: var(--teal); border: 1px solid rgba(0,177,201,.2); }
+.status-pill.late { background: var(--red-l); color: var(--red); border: 1px solid rgba(248,113,113,.2); }
+.status-pill.pending { background: var(--surface2); color: var(--text3); border: 1px solid var(--border); }

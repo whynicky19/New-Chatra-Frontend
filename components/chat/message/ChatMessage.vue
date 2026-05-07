@@ -129,35 +129,5 @@ onMounted(async () => {
   try { rxs.value = await rxSvc.get(props.message.id) } catch {}
 })
 </script>
-<style scoped>
-.mrow{display:flex;align-items:flex-end;gap:8px;padding:2px 16px;animation:fadeIn .15s ease}
-.mrow.own{flex-direction:row-reverse}
-.mgroup{display:flex;flex-direction:column;max-width:70%}
-.mgroup.own{align-items:flex-end}
-.msg-av{flex-shrink:0}
-.msg-av-img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1px solid var(--border)}
-.sender-name{font-size:12px;font-weight:600;color:var(--accent);margin-bottom:3px;padding-left:2px}
-.bubble{position:relative;border-radius:var(--r-lg);word-break:break-word;transition:box-shadow .15s}
-.b-other{background:var(--surface2);border:1px solid var(--border);border-bottom-left-radius:4px;color:var(--text1)}
-.b-own{background:linear-gradient(135deg,#007a8e,#00B1C9);color:#fff;border-bottom-right-radius:4px;box-shadow:0 4px 12px rgba(0,177,201,.3)}
-.msg-text{font-size:14px;line-height:1.5;padding:9px 13px;white-space:pre-wrap}
-.msg-img{max-width:260px;max-height:220px;border-radius:var(--r-md);cursor:pointer;display:block;margin:6px}
-.msg-file{display:flex;align-items:center;gap:10px;padding:10px 13px;text-decoration:none;color:inherit}
-.file-name{font-size:13px;font-weight:500;max-width:160px}
-.b-own .msg-file{color:#fff}
-.msg-time{font-size:11px;opacity:.55;padding:0 10px 6px;text-align:right}
-.msg-actions{position:absolute;top:-38px;left:0;display:flex;align-items:center;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:4px 8px;box-shadow:var(--sh-md);z-index:10;white-space:nowrap}
-.msg-actions.own{left:auto;right:0}
-.ea{font-size:15px;padding:2px;cursor:pointer;border:none;background:none;transition:transform .1s;line-height:1}
-.ea:hover{transform:scale(1.3)}
-.ea-sep{width:1px;height:14px;background:var(--border);margin:0 2px}
-.ea-del{display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;cursor:pointer;border:none;background:none;color:var(--text3);transition:all .12s}
-.ea-del:hover{background:var(--red-l);color:var(--red)}
-.reactions{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
-.reaction-chip{font-size:12px;padding:2px 7px;background:var(--surface);border:1px solid var(--border);border-radius:100px;cursor:default}
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out}
-.lightbox img{max-width:90vw;max-height:90vh;border-radius:var(--r-lg)}
-.ha-enter-active,.ha-leave-active{transition:opacity .15s}
-.ha-enter-from,.ha-leave-to{opacity:0}
-.bg-b0{background:#2563eb}
-</style>
+
+<style scoped src="~/assets/components/chatMessage.css"></style>

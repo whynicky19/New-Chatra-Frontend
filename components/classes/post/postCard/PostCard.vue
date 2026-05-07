@@ -36,21 +36,5 @@ const bodyPreview = computed(() => props.post.body?.replace(/\n\n📎.*$/s,'').r
 const hasFiles = computed(() => props.post.body?.includes('📎'))
 const date = computed(() => new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'short'}))
 </script>
-<style scoped>
-.pc{display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);transition:all .15s;cursor:pointer;user-select:none}
-.pc:hover{box-shadow:var(--sh-md);border-color:var(--blue);transform:translateY(-1px)}
-.pc:active{transform:scale(.99)}
-.pc-left{flex-shrink:0;padding-top:2px}
-.pc-icon{width:36px;height:36px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center}
-.lec{background:var(--blue-l);color:var(--blue)}
-.hw{background:var(--green-l);color:var(--green)}
-.pc-body{flex:1;min-width:0}
-.pc-type-label{font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--text4);margin-bottom:3px}
-.pc-title{font-size:15px;font-weight:600;color:var(--text1);margin-bottom:4px}
-.pc-preview{font-size:13px;color:var(--text3);line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.pc-meta{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:12px;color:var(--text4);flex-wrap:wrap}
-.due-badge{display:flex;align-items:center;gap:3px;color:var(--yellow,#d97706)}
-.files-hint{display:flex;align-items:center;gap:3px;color:var(--blue)}
-.pc-arrow{flex-shrink:0;color:var(--text4);padding-top:2px;transition:transform .15s}
-.pc:hover .pc-arrow{color:var(--blue);transform:translateX(2px)}
-</style>
+
+<style scoped src="~/assets/components/postCard.css"></style>

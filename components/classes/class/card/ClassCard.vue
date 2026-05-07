@@ -44,18 +44,5 @@ const teacherName = computed(() => {
 })
 const hwCount = computed(() => props.hwCount || 0)
 </script>
-<style scoped>
-.cc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; cursor: pointer; transition: all .2s; display: flex; flex-direction: column; }
-.cc:hover { border-color: rgba(124,58,237,.5); box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 0 20px rgba(124,58,237,.2); transform: translateY(-3px); }
-.cc-cover { position: relative; height: 160px; display: flex; align-items: flex-end; padding: 14px; overflow: hidden; }
-.cc-cover-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-.cc-cover-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 35%, rgba(0,0,0,.78)); z-index: 1; }
-.cc-title-over { position: relative; z-index: 2; font-size: 22px; font-weight: 800; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.6); letter-spacing: -.01em; }
-.cc-due-badge { position: absolute; top: 12px; right: 12px; background: #a3e635; color: #0a0a0f; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 100px; z-index: 2; }
-.cc-body { padding: 16px; }
-.cc-desc { font-size: 13px; color: var(--text3); line-height: 1.5; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.cc-footer { display: flex; align-items: center; justify-content: space-between; }
-.cc-teacher { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text4); }
-.cc-view-btn { display: flex; align-items: center; gap: 5px; padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r-md); font-size: 12px; font-weight: 500; color: var(--text2); cursor: pointer; transition: all .15s; }
-.cc-view-btn:hover { background: rgba(124,58,237,.2); border-color: rgba(124,58,237,.4); color: #4dd6e8; }
-</style>
+
+<style scoped src="~/assets/components/classCard.css"></style>
