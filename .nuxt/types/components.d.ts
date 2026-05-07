@@ -14,22 +14,22 @@ type HydrationStrategies = {
 type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }> & T
 
 interface _GlobalComponents {
-  AiWindow: typeof import("../../components/chat/AiWindow.vue")['default']
-  ChatListItem: typeof import("../../components/chat/ChatListItem.vue")['default']
-  ChatMessage: typeof import("../../components/chat/ChatMessage.vue")['default']
-  ChatWindow: typeof import("../../components/chat/ChatWindow.vue")['default']
-  AssignmentCard: typeof import("../../components/classes/AssignmentCard.vue")['default']
-  AssignmentModal: typeof import("../../components/classes/AssignmentModal.vue")['default']
-  ClassAiChat: typeof import("../../components/classes/ClassAiChat.vue")['default']
-  ClassCard: typeof import("../../components/classes/ClassCard.vue")['default']
-  CreateAssignmentModal: typeof import("../../components/classes/CreateAssignmentModal.vue")['default']
-  CreateClassModal: typeof import("../../components/classes/CreateClassModal.vue")['default']
-  CreatePostModal: typeof import("../../components/classes/CreatePostModal.vue")['default']
-  PostCard: typeof import("../../components/classes/PostCard.vue")['default']
-  ViewPostModal: typeof import("../../components/classes/ViewPostModal.vue")['default']
-  AppSidebar: typeof import("../../components/layout/AppSidebar.vue")['default']
-  GestureVerify: typeof import("../../components/ui/GestureVerify.vue")['default']
-  ToastContainer: typeof import("../../components/ui/ToastContainer.vue")['default']
+  AiWindow: typeof import("../../components/chat/aiWindow/AiWindow.vue")['default']
+  ChatWindow: typeof import("../../components/chat/chatWindow/ChatWindow.vue")['default']
+  ChatListItem: typeof import("../../components/chat/listItem/ChatListItem.vue")['default']
+  ChatMessage: typeof import("../../components/chat/message/ChatMessage.vue")['default']
+  AssignmentCard: typeof import("../../components/classes/assignment/assignmentCard/AssignmentCard.vue")['default']
+  AssignmentModal: typeof import("../../components/classes/assignment/assignmentModal/AssignmentModal.vue")['default']
+  ClassAiChat: typeof import("../../components/classes/class/aiChat/ClassAiChat.vue")['default']
+  ClassCard: typeof import("../../components/classes/class/card/ClassCard.vue")['default']
+  CreateAssignmentModal: typeof import("../../components/classes/create/asignmentModal/CreateAssignmentModal.vue")['default']
+  CreateClassModal: typeof import("../../components/classes/create/classModal/CreateClassModal.vue")['default']
+  CreatePostModal: typeof import("../../components/classes/create/postModal/CreatePostModal.vue")['default']
+  PostCard: typeof import("../../components/classes/post/postCard/PostCard.vue")['default']
+  ViewPostModal: typeof import("../../components/classes/post/viewPostModal/ViewPostModal.vue")['default']
+  AppSidebar: typeof import("../../components/sidebar/appSidebar/AppSidebar.vue")['default']
+  GestureVerify: typeof import("../../components/ui/gestureVerify/GestureVerify.vue")['default']
+  ToastContainer: typeof import("../../components/ui/toastContainer/ToastContainer.vue")['default']
   NuxtWelcome: typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']
   NuxtLayout: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
   NuxtErrorBoundary: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']
@@ -53,22 +53,22 @@ interface _GlobalComponents {
   Html: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Html']
   Body: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Body']
   NuxtIsland: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-island")['default']
-  LazyAiWindow: LazyComponent<typeof import("../../components/chat/AiWindow.vue")['default']>
-  LazyChatListItem: LazyComponent<typeof import("../../components/chat/ChatListItem.vue")['default']>
-  LazyChatMessage: LazyComponent<typeof import("../../components/chat/ChatMessage.vue")['default']>
-  LazyChatWindow: LazyComponent<typeof import("../../components/chat/ChatWindow.vue")['default']>
-  LazyAssignmentCard: LazyComponent<typeof import("../../components/classes/AssignmentCard.vue")['default']>
-  LazyAssignmentModal: LazyComponent<typeof import("../../components/classes/AssignmentModal.vue")['default']>
-  LazyClassAiChat: LazyComponent<typeof import("../../components/classes/ClassAiChat.vue")['default']>
-  LazyClassCard: LazyComponent<typeof import("../../components/classes/ClassCard.vue")['default']>
-  LazyCreateAssignmentModal: LazyComponent<typeof import("../../components/classes/CreateAssignmentModal.vue")['default']>
-  LazyCreateClassModal: LazyComponent<typeof import("../../components/classes/CreateClassModal.vue")['default']>
-  LazyCreatePostModal: LazyComponent<typeof import("../../components/classes/CreatePostModal.vue")['default']>
-  LazyPostCard: LazyComponent<typeof import("../../components/classes/PostCard.vue")['default']>
-  LazyViewPostModal: LazyComponent<typeof import("../../components/classes/ViewPostModal.vue")['default']>
-  LazyAppSidebar: LazyComponent<typeof import("../../components/layout/AppSidebar.vue")['default']>
-  LazyGestureVerify: LazyComponent<typeof import("../../components/ui/GestureVerify.vue")['default']>
-  LazyToastContainer: LazyComponent<typeof import("../../components/ui/ToastContainer.vue")['default']>
+  LazyAiWindow: LazyComponent<typeof import("../../components/chat/aiWindow/AiWindow.vue")['default']>
+  LazyChatWindow: LazyComponent<typeof import("../../components/chat/chatWindow/ChatWindow.vue")['default']>
+  LazyChatListItem: LazyComponent<typeof import("../../components/chat/listItem/ChatListItem.vue")['default']>
+  LazyChatMessage: LazyComponent<typeof import("../../components/chat/message/ChatMessage.vue")['default']>
+  LazyAssignmentCard: LazyComponent<typeof import("../../components/classes/assignment/assignmentCard/AssignmentCard.vue")['default']>
+  LazyAssignmentModal: LazyComponent<typeof import("../../components/classes/assignment/assignmentModal/AssignmentModal.vue")['default']>
+  LazyClassAiChat: LazyComponent<typeof import("../../components/classes/class/aiChat/ClassAiChat.vue")['default']>
+  LazyClassCard: LazyComponent<typeof import("../../components/classes/class/card/ClassCard.vue")['default']>
+  LazyCreateAssignmentModal: LazyComponent<typeof import("../../components/classes/create/asignmentModal/CreateAssignmentModal.vue")['default']>
+  LazyCreateClassModal: LazyComponent<typeof import("../../components/classes/create/classModal/CreateClassModal.vue")['default']>
+  LazyCreatePostModal: LazyComponent<typeof import("../../components/classes/create/postModal/CreatePostModal.vue")['default']>
+  LazyPostCard: LazyComponent<typeof import("../../components/classes/post/postCard/PostCard.vue")['default']>
+  LazyViewPostModal: LazyComponent<typeof import("../../components/classes/post/viewPostModal/ViewPostModal.vue")['default']>
+  LazyAppSidebar: LazyComponent<typeof import("../../components/sidebar/appSidebar/AppSidebar.vue")['default']>
+  LazyGestureVerify: LazyComponent<typeof import("../../components/ui/gestureVerify/GestureVerify.vue")['default']>
+  LazyToastContainer: LazyComponent<typeof import("../../components/ui/toastContainer/ToastContainer.vue")['default']>
   LazyNuxtWelcome: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
   LazyNuxtLayout: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>
   LazyNuxtErrorBoundary: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']>

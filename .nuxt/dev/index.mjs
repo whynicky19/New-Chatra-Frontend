@@ -3,41 +3,41 @@ import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
 import nodeCrypto from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/h3/dist/index.mjs';
-import { escapeHtml } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/@vue/shared/dist/shared.cjs.js';
-import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/ufo/dist/index.mjs';
-import { renderToString } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/vue/server-renderer/index.mjs';
-import { klona } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/defu/dist/defu.mjs';
-import destr, { destr as destr$1 } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/destr/dist/index.mjs';
-import { snakeCase } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/scule/dist/index.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/unhead/dist/server.mjs';
-import { stringify, uneval } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/devalue/index.js';
-import { isVNode, isRef, toValue } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/vue/index.mjs';
-import { DeprecationsPlugin, PromisesPlugin, TemplateParamsPlugin, AliasSortingPlugin } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/unhead/dist/plugins.mjs';
-import { createHooks } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/hookable/dist/index.mjs';
-import { createFetch, Headers as Headers$1 } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/ofetch/dist/node.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/node-mock-http/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/unstorage/drivers/fs.mjs';
-import { digest } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/ohash/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/radix3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, createError, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/h3/dist/index.mjs';
+import { escapeHtml } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/@vue/shared/dist/shared.cjs.js';
+import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/ufo/dist/index.mjs';
+import { renderToString } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/vue/server-renderer/index.mjs';
+import { klona } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/klona/dist/index.mjs';
+import defu, { defuFn } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/defu/dist/defu.mjs';
+import destr, { destr as destr$1 } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/destr/dist/index.mjs';
+import { snakeCase } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/scule/dist/index.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/unhead/dist/server.mjs';
+import { stringify, uneval } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/devalue/index.js';
+import { isVNode, isRef, toValue } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/vue/index.mjs';
+import { DeprecationsPlugin, PromisesPlugin, TemplateParamsPlugin, AliasSortingPlugin } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/unhead/dist/plugins.mjs';
+import { createHooks } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/hookable/dist/index.mjs';
+import { createFetch, Headers as Headers$1 } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/ofetch/dist/node.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/node-mock-http/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/unstorage/drivers/fs.mjs';
+import { digest } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/ohash/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/radix3/dist/index.mjs';
 import { readFile } from 'node:fs/promises';
-import consola, { consola as consola$1 } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/youch-core/build/index.js';
-import { Youch } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/source-map/source-map.js';
+import consola, { consola as consola$1 } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/youch-core/build/index.js';
+import { Youch } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/source-map/source-map.js';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { getContext } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/unctx/dist/index.mjs';
-import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/errx/dist/index.js';
-import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
+import { getContext } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/unctx/dist/index.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/errx/dist/index.js';
+import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
 import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$1 } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/pathe/dist/index.mjs';
-import { walkResolver } from 'file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/node_modules/unhead/dist/utils.mjs';
+import { dirname as dirname$1, resolve as resolve$1 } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/pathe/dist/index.mjs';
+import { walkResolver } from 'file://C:/Users/Asus/Desktop/new%20front/node_modules/unhead/dist/utils.mjs';
 
-const serverAssets = [{"baseName":"server","dir":"C:/Users/Asus/Desktop/Projects/Chatra/frontend/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"C:/Users/Asus/Desktop/new front/server/assets"}];
 
 const assets$1 = createStorage();
 
@@ -49,11 +49,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/Asus/Desktop/Projects/Chatra/frontend","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/Asus/Desktop/Projects/Chatra/frontend/server","watchOptions":{"ignored":[null]}}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/Asus/Desktop/Projects/Chatra/frontend/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/Asus/Desktop/Projects/Chatra/frontend/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:/Users/Asus/Desktop/Projects/Chatra/frontend/.data/kv"}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/Asus/Desktop/new front","watchOptions":{"ignored":[null]}}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/Asus/Desktop/new front/server","watchOptions":{"ignored":[null]}}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/Asus/Desktop/new front/.nuxt"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/Asus/Desktop/new front/.nuxt/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:/Users/Asus/Desktop/new front/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -697,6 +697,17 @@ new Proxy(/* @__PURE__ */ Object.create(null), {
   }
 });
 
+function isPathInScope(pathname, base) {
+  let canonical;
+  try {
+    const pre = pathname.replace(/%2f/gi, "/").replace(/%5c/gi, "\\");
+    canonical = new URL(pre, "http://_").pathname;
+  } catch {
+    return false;
+  }
+  return !base || canonical === base || canonical.startsWith(base + "/");
+}
+
 const config = useRuntimeConfig();
 const _routeRulesMatcher = toRouteMatcher(
   createRouter({ routes: config.nitro.routeRules })
@@ -713,7 +724,12 @@ function createRouteRulesHandler(ctx) {
         let targetPath = event.path;
         const strpBase = routeRules.redirect._redirectStripBase;
         if (strpBase) {
+          if (!isPathInScope(event.path.split("?")[0], strpBase)) {
+            throw createError({ statusCode: 400 });
+          }
           targetPath = withoutBase(targetPath, strpBase);
+        } else if (targetPath.startsWith("//")) {
+          targetPath = targetPath.replace(/^\/+/, "/");
         }
         target = joinURL(target.slice(0, -3), targetPath);
       } else if (event.path.includes("?")) {
@@ -728,7 +744,12 @@ function createRouteRulesHandler(ctx) {
         let targetPath = event.path;
         const strpBase = routeRules.proxy._proxyStripBase;
         if (strpBase) {
+          if (!isPathInScope(event.path.split("?")[0], strpBase)) {
+            throw createError({ statusCode: 400 });
+          }
           targetPath = withoutBase(targetPath, strpBase);
+        } else if (targetPath.startsWith("//")) {
+          targetPath = targetPath.replace(/^\/+/, "/");
         }
         target = joinURL(target.slice(0, -3), targetPath);
       } else if (event.path.includes("?")) {
@@ -2013,7 +2034,7 @@ async function errorHandler(error, event) {
   // H3 will handle fallback
 }
 
-const rootDir = "C:/Users/Asus/Desktop/Projects/Chatra/frontend";
+const rootDir = "C:/Users/Asus/Desktop/new front";
 
 const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1, viewport-fit=cover"}],"link":[{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"},{"rel":"icon","type":"image/x-icon","href":"/favicon.ico"},{"rel":"icon","type":"image/png","sizes":"32x32","href":"/logo.png"},{"rel":"apple-touch-icon","sizes":"180x180","href":"/logo.png"}],"style":[],"script":[{"innerHTML":"(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');else if(t==='light')document.documentElement.classList.remove('dark');else if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark');}catch(e){}})();","type":"text/javascript"}],"noscript":[],"title":"Chatra"};
 
@@ -2038,7 +2059,7 @@ const asyncContext = getContext("nuxt-dev", {
 	asyncContext: true,
 	AsyncLocalStorage
 });
-const __UbO6i6QLNtKq4BZHhwY2ehtPiZKOCgoLF6RLVchSNQ = (nitroApp) => {
+const _1GZW_7uu9qKkGYHWxnc2KskN3Mu5iwTHslNsDRah5A = (nitroApp) => {
 	const handler = nitroApp.h3App.handler;
 	nitroApp.h3App.handler = (event) => {
 		return asyncContext.callAsync({
@@ -2112,23 +2133,23 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  __UbO6i6QLNtKq4BZHhwY2ehtPiZKOCgoLF6RLVchSNQ,
+  _1GZW_7uu9qKkGYHWxnc2KskN3Mu5iwTHslNsDRah5A,
 _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
 const assets = {
   "/index.mjs": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"1a37a-Ba+DHHlVgEH8/rAVkpdPfBIIDrA\"",
-    "mtime": "2026-05-04T09:44:59.569Z",
-    "size": 107386,
+    "etag": "\"1a490-SU+c7MCgfy2shgYnePpKjprKBBk\"",
+    "mtime": "2026-05-07T12:16:22.510Z",
+    "size": 107664,
     "path": "index.mjs"
   },
   "/index.mjs.map": {
     "type": "application/json",
-    "etag": "\"6a173-WV9L2NG7S7aaZAKCXT2cyrWSjGo\"",
-    "mtime": "2026-05-04T09:44:59.569Z",
-    "size": 434547,
+    "etag": "\"6ae40-sXk+/cxyND423J/SUOyJ0yKjbOk\"",
+    "mtime": "2026-05-07T12:16:22.510Z",
+    "size": 437824,
     "path": "index.mjs.map"
   }
 };
@@ -2156,7 +2177,7 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _1LwDxP = eventHandler((event) => {
+const _uVqqEz = eventHandler((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
@@ -2300,7 +2321,7 @@ const APP_ROOT_CLOSE_TAG = `</${appRootTag}>`;
 // @ts-expect-error file will be produced after app build
 const getServerEntry = () => Promise.resolve().then(function () { return server$1; }).then((r) => r.default || r);
 // @ts-expect-error file will be produced after app build
-const getClientManifest = () => import('file://C:/Users/Asus/Desktop/Projects/Chatra/frontend/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getClientManifest = () => import('file://C:/Users/Asus/Desktop/new%20front/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
 // -- SSR Renderer --
 const getSSRRenderer = lazyCachedFunction(async () => {
 	// Load server bundle
@@ -2591,13 +2612,13 @@ async function getIslandContext(event) {
 	};
 }
 
-const _lazy_2pBgBY = () => Promise.resolve().then(function () { return renderer; });
+const _lazy_bMIPWk = () => Promise.resolve().then(function () { return renderer; });
 
 const handlers = [
-  { route: '', handler: _1LwDxP, lazy: false, middleware: true, method: undefined },
-  { route: '/__nuxt_error', handler: _lazy_2pBgBY, lazy: true, middleware: false, method: undefined },
+  { route: '', handler: _uVqqEz, lazy: false, middleware: true, method: undefined },
+  { route: '/__nuxt_error', handler: _lazy_bMIPWk, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: handler$1, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_2pBgBY, lazy: true, middleware: false, method: undefined }
+  { route: '/**', handler: _lazy_bMIPWk, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {

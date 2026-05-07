@@ -26,7 +26,7 @@
         <span v-else>{{ t('login.submit') }}</span>
       </button>
     </form>
-    <p class="auth-link-row">{{ t('login.no_account') }} <NuxtLink to="/register/register" class="auth-link">{{ t('login.register') }}</NuxtLink></p>
+    <p class="auth-link-row">{{ t('login.no_account') }} <NuxtLink to="/register" class="auth-link">{{ t('login.register') }}</NuxtLink></p>
   </div>
 </template>
 <script setup lang="ts">

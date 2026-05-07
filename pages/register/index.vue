@@ -60,7 +60,7 @@
         <span v-else>{{ t('register.submit') }}</span>
       </button>
     </form>
-    <p class="auth-link-row">{{ t('register.has_account') }} <NuxtLink to="/login/login" style="color:var(--teal);font-weight:500">{{ t('register.login_link') }}</NuxtLink></p>
+    <p class="auth-link-row">{{ t('register.has_account') }} <NuxtLink to="/login" style="color:var(--teal);font-weight:500">{{ t('register.login_link') }}</NuxtLink></p>
   </div>
 </template>
 

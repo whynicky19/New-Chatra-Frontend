@@ -1,10 +1,16 @@
 export default defineNuxtConfig({
-  ssr: false, // SPA mode — fixes "Not authenticated" on page refresh (token only in localStorage)
+  ssr: false,
   devtools: { enabled: false },
   compatibilityDate: '2024-04-03',
   modules: ['@pinia/nuxt'],
   css: ['~/assets/css/main.css'],
   components: [{ path: '~/components', pathPrefix: false }],
+  imports: {
+    dirs: [
+      'composables',
+      'composables/**',
+    ]
+  },
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:8000',
@@ -27,7 +33,6 @@ export default defineNuxtConfig({
       ],
       script: [
         {
-          // Inline script runs before paint — eliminates dark mode flash
           innerHTML: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');else if(t==='light')document.documentElement.classList.remove('dark');else if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark');}catch(e){}})();`,
           type: 'text/javascript',
         },
